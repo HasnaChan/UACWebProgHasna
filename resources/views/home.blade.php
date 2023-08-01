@@ -241,6 +241,8 @@
                             } else{
                                 $matchUser = User::where('id', '=', $matchers->manid)->first();
                             }
+
+                            // $linkedins= User::all();
                         @endphp
 
                         <div class="col-md-3 mb-3">
@@ -249,6 +251,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $matchUser->name }}</h5>
                                     <p class="card-text">{{ $matchUser->job->jobName }}</p>
+                                    {{-- <p class="card-text">{{ $linkedins->linkedin }}</p> --}}
+                                    @if ($matchUser->linkedin)
+                                        <p class="card-text"><a href="{{ $matchUser->linkedin }}" target="_blank">LinkedIn</a></p>
+                                    @endif
 
                                     <div class="container row d-flex justify-content-center ">
 
