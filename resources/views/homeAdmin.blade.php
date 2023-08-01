@@ -17,7 +17,7 @@
                     <img src="{{ asset('storage/'.$u->photo) }}" class="card-img-top" alt="User Photo" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ $u->name }}</h5>
-                        <p class="card-text">{{ $u->city->cityName }}</p>
+                        <p class="card-text">{{ $u->job->jobName }}</p>
 
                         <form action="/ban-user/{{ $u->id }}" method="POST">
                             @csrf
