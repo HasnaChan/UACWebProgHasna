@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\State;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class StateSeeder extends Seeder
 {
@@ -19,8 +20,11 @@ class StateSeeder extends Seeder
             ['stateName' => 'default'],
             ['stateName' => 'waiting'],
             ['stateName' => 'match'],
+            ['stateName' => 'banned'],
             ['stateName' => 'dislike'],
             ['stateName' => 'unmatch']
         ];
+
+        State::insert($states);
     }
 }

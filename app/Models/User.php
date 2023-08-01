@@ -43,8 +43,11 @@ class User extends Authenticatable
         return $this->belongsTo(State::class);
     }
 
+    public function Job(){
+        return $this->belongsTo(Job::class);
+    }
 
-    public function Interested(){
+    public function Matched(){
         return $this->hasMany(User::class);
     }
 }

@@ -2,54 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+
     public function index(){
-        // $cities = City::all();
-        return view('register');
+        $jobs = Job::all();
+        return view('register', compact('jobs'));
         // dd($cities);
     }
-    public function store(Request $request){ //setiap nembak data request harus kasih ini
-        $validate = $request->validate([
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
             'name' => 'required',
-            'dob' => 'required',
             'gender' => 'required',
             'email' => 'required|unique:users',
-            // 'phoneNumber' => 'required|numeric',
-            'photo' => 'required|image|max:2048',
+            'linkedin' => 'required',
+            'phoneNumber' => 'required|numeric',
+            'photo' => 'image|max:2048',
             'password' => 'required',
-            'city_id' => 'required|exists:cities,id'
-
+            'job_id' => 'required|exists:jobs,id'
         ]);
-        $validate['wallet'] = 0;
 
+        $validatedData['wallet'] = 0;
         if ($request->file('photo')->isValid()) {
-            $validate['photo'] = $request->file('photo')->store('photo', 'public');
+            $validatedData['photo'] = $request->file('photo')->store('photo', 'public');
         }
-        // if ($validate['gender'] == 'male'){
-        //     $gender = "01";
-        // } else{
-        //     $gender = "02";
-        // }
 
-        // $validate['generatedId'] = 'SKY'.$validate['datingCode'].$gender;
-        // $validate['datingCode'] = 'DT'.$validate['datingCode'];
-        // $validate['phoneNumber'] = '+65'.$validate['phoneNumber'];
+        $validatedData['password'] = bcrypt($validatedData['password']);
 
-        $validate['password'] = bcrypt($validate['password']);
+        $validatedData['admin'] = 0;
+        $validatedData['state_id'] = 1;
 
-        // $validate['admin'] = 0;
-        $validate['state_id'] = 1;
+        $randomPrice = rand(100000, 250000);
 
-        User::create($validate);
+        User::create($validatedData);
 
         return redirect('/login')->with('registerSuccess', 'Registration Succes, Please Login!');
 
     }
+
 
 
     public function login(Request $request){

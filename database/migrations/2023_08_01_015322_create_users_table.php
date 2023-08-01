@@ -17,15 +17,18 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('gender');
-            $table->string('profession');
-            $table->string('fieldOfWork');
             $table->string('linkedin');
+            $table->string('gender');
             $table->string('phoneNumber');
-            $table->string('price');
+            $table->string('photo')->nullable();
             $table->string('password');
+            $table->integer('admin');
+            $table->integer('wallet')->default(0);
             $table->unsignedBigInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->unsignedBigInteger('job_id');
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 
